@@ -31,29 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (mainContainer) mainContainer.classList.add('show');
     }, 2000);
 
-    // 2. Fetch QR Code
-    fetch('/api/qr')
-        .then(res => res.json())
-        .then(data => {
-            if (data.success && data.qrCodeUrl) {
-                const qrSection = document.getElementById('qrDisplaySection');
-                const qrImg = document.getElementById('frontQrImg');
-                const downloadBtn = document.getElementById('downloadFrontQrBtn');
-                
-                qrImg.src = data.qrCodeUrl;
-                qrSection.classList.remove('hidden');
 
-                downloadBtn.onclick = () => {
-                    const a = document.createElement('a');
-                    a.href = data.qrCodeUrl;
-                    a.download = 'academy_form_qr.png';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                };
-            }
-        })
-        .catch(err => console.error("Error fetching QR:", err));
 
     // 3. Popup with Random Quote
     const quotes = [

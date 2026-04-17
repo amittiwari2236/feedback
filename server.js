@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
 const { google } = require('googleapis');
-const qrcode = require('qrcode');
+
 const fs = require('fs');
 const path = require('path');
 require('dotenv').config();
@@ -351,24 +351,6 @@ app.get('/api/data', async (req, res) => {
         });
     } catch (error) {
         console.error('Fetch Error:', error.message);
-        return res.status(500).json({ success: false });
-    }
-});
-
-app.get('/api/qr', async (req, res) => {
-    try {
-        const formUrl = process.env.HOST_URL || 'http://localhost:3000/';
-
-        const qrImage = await qrcode.toDataURL(formUrl, {
-            color: {
-                dark: '#0a0f6a',
-                light: '#ffffff',
-            },
-        });
-
-        return res.json({ success: true, qrCodeUrl: qrImage });
-    } catch (error) {
-        console.error('QR Error:', error.message);
         return res.status(500).json({ success: false });
     }
 });
