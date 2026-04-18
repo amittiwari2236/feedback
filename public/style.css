@@ -36,12 +36,12 @@ body {
 .logo-container {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 5px;
 }
 
 .logo-img {
-    width: 65px;
-    height: 65px;
+    width: 120px;
+    height: 120px;
     object-fit: contain;
 }
 

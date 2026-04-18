@@ -11,6 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 const normalizeText = (value) => String(value || '').trim();
 const sanitizeHtml = (value) => String(value || '')
@@ -364,7 +365,7 @@ app.get('/api/settings', (req, res) => {
         res.json({
             title: "Dev Sanskriti Vishwavidyalaya",
             subtitle: "A University with a difference",
-            logoUrl: "https://www.dsvv.ac.in/wp-content/uploads/2022/07/unnamed.jpg"
+            logoUrl: "/assets/deva-removebg-preview.png"
         });
     }
 });
@@ -375,7 +376,7 @@ app.post('/api/settings', (req, res) => {
         const config = {
             title: title || "Dev Sanskriti Vishwavidyalaya",
             subtitle: subtitle || "A University with a difference",
-            logoUrl: logoUrl || "https://www.dsvv.ac.in/wp-content/uploads/2022/07/unnamed.jpg"
+            logoUrl: logoUrl || "/assets/deva-removebg-preview.png"
         };
         fs.writeFileSync(SETTINGS_FILE, JSON.stringify(config, null, 2));
         res.json({ success: true, message: 'Settings saved.' });
