@@ -363,9 +363,8 @@ app.get('/api/settings', (req, res) => {
         res.sendFile(SETTINGS_FILE);
     } else {
         res.json({
-            title: "Dev Sanskriti Vishwavidyalaya",
-            subtitle: "A University with a difference",
-            logoUrl: "/assets/deva-removebg-preview.png"
+            
+            logoUrl: "/assets/DSVV_LOGO_PNG.png"
         });
     }
 });

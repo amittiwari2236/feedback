@@ -29,20 +29,24 @@ body {
     background: transparent;
     display: flex;
     justify-content: center;
-    margin-top: 8vh;
-    margin-bottom: 2vh;
+    align-items: center;
+    margin: 10px 0 8px;
 }
 
 .logo-container {
     display: flex;
     align-items: center;
+    justify-content: center;
+    width: 100%;
     gap: 5px;
 }
 
 .logo-img {
-    width: 120px;
-    height: 120px;
+    width: 245px;
+    height: auto;
+    display: block;
     object-fit: contain;
+    filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.35));
 }
 
 .logo-text h1 {
@@ -289,6 +293,7 @@ body {
 /* Custom Contact Styling block */
 .contact-info-section {
     text-align: center;
+    margin-top: 263px;
 }
 
 /* Popup styles - UPSCALED TO MASSIVE */
@@ -330,12 +335,16 @@ body {
         width: 100%;
     }
 
+    .contact-info-section {
+        margin-top: 0;
+    }
+
     /* Format Header Layout */
     .header {
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 20px;
+        margin-top: 30px;
         margin-bottom: 25px;
     }
 
@@ -345,7 +354,7 @@ body {
     }
 
     .logo-img {
-        width: 70px;
+        width: 250px;
         height: auto;
         margin-bottom: 10px;
     }
