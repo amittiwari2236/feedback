@@ -197,10 +197,10 @@ const createTransporter = () => {
 app.post('/api/submit', async (req, res) => {
    const {
   name,
-  email,
-  whatsapp,
   designation,
   organisation,
+  email,
+  whatsapp,
   location,
   feedback
 } = req.body;
@@ -212,9 +212,9 @@ app.post('/api/submit', async (req, res) => {
     const sheetValues = [
         normalizeText(name),
         normalizedEmail,
-        normalizeText(whatsapp),
         normalizeText(designation),
         normalizeText(organisation),
+        normalizeText(whatsapp),
         normalizeText(location),
         normalizeText(feedback),
         new Date().toISOString(),
@@ -277,7 +277,15 @@ app.post('/api/submit', async (req, res) => {
                                     <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(normalizedEmail)}</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Phone</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Designation</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(designation)}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Organisation</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(organisation)}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Whatsapp Number</td>
                                     <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(whatsapp)}</td>
                                 </tr>
                                 <tr>
@@ -285,20 +293,8 @@ app.post('/api/submit', async (req, res) => {
                                     <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(location)}</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Batch Year</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(year)}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Profession</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(profession)}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Experience</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(experience)}</td>
-                                </tr>
-                                <tr>
-                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Message</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(message)}</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Feedback</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(feedback)}</td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Submitted Date and Time</td>
