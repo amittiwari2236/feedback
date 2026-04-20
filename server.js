@@ -195,21 +195,28 @@ const createTransporter = () => {
 };
 
 app.post('/api/submit', async (req, res) => {
-    const { fullName, email, phone, course, location, year, profession, experience, message } = req.body;
+   const {
+  name,
+  email,
+  whatsapp,
+  designation,
+  organisation,
+  location,
+  feedback
+} = req.body;
     const courseOrLocation = normalizeText(location || course);
 
     console.log('Form Data Received:', req.body);
 
     const normalizedEmail = normalizeText(email);
     const sheetValues = [
-        normalizeText(fullName),
+        normalizeText(name),
         normalizedEmail,
-        normalizeText(phone),
-        courseOrLocation,
-        normalizeText(year),
-        normalizeText(profession),
-        normalizeText(experience),
-        normalizeText(message),
+        normalizeText(whatsapp),
+        normalizeText(designation),
+        normalizeText(organisation),
+        normalizeText(location),
+        normalizeText(feedback),
         new Date().toISOString(),
     ];
 
@@ -263,7 +270,7 @@ app.post('/api/submit', async (req, res) => {
                             <table style="width: 100%; max-width: 680px; border-collapse: collapse; font-size: 14px;">
                                 <tr>
                                     <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold; width: 32%;">Name</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(fullName)}</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(name)}</td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Email</td>
@@ -271,11 +278,11 @@ app.post('/api/submit', async (req, res) => {
                                 </tr>
                                 <tr>
                                     <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Phone</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(phone)}</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(whatsapp)}</td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Location</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(courseOrLocation)}</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(location)}</td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Batch Year</td>
