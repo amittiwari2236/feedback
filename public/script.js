@@ -64,14 +64,73 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById('alumniForm');
     const submitBtn = document.getElementById('submitBtn');
     const statusMsg = document.getElementById('statusMessage');
+    const emojiContainer = document.getElementById('emojiContainer');
+    const emojiInput = document.getElementById('emojiValue');
+    const messageSection = document.getElementById('feedbackMessageSection');
+    const messageTextarea = document.getElementById('message');
+    const messageLabel = document.getElementById('messageLabel');
+    const successOverlay = document.getElementById('successOverlay');
 
     if (!form || !submitBtn || !statusMsg) {
         console.error('Form elements not found. Expected alumniForm, submitBtn, and statusMessage.');
         return;
     }
 
+    // Emoji Logic
+    if (emojiContainer) {
+        const emojis = emojiContainer.querySelectorAll('.emoji-btn');
+        emojis.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove selected class from all
+                emojis.forEach(e => e.classList.remove('selected'));
+                // Add selected class to clicked
+                btn.classList.add('selected');
+                
+                // Store value
+                const emojiVal = btn.dataset.emoji;
+                const emojiStr = btn.dataset.value;
+                emojiInput.value = emojiStr + ' ' + emojiVal;
+                
+                // Show message section and submit button
+                messageSection.classList.remove('hidden');
+                submitBtn.classList.remove('hidden');
+
+                // Validation rule
+                if (['😐', '😕', '😣'].includes(emojiVal)) {
+                    messageTextarea.required = true;
+                    messageLabel.textContent = 'Message (Required)';
+                } else {
+                    messageTextarea.required = false;
+                    messageLabel.textContent = 'Message (Optional)';
+                }
+            });
+        });
+    }
+
+    // Custom Validation for Whatsapp
+    const whatsappInput = document.getElementById('whatsapp');
+    if (whatsappInput) {
+        whatsappInput.addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+            if (e.target.value.length > 10) {
+                e.target.value = e.target.value.slice(0, 10);
+            }
+        });
+    }
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        
+        // Final Validation Check
+        if (whatsappInput && whatsappInput.value.length !== 10) {
+            alert('Whatsapp number must be exactly 10 digits.');
+            return;
+        }
+
+        if (!emojiInput.value) {
+            alert('Please select an emoji rating.');
+            return;
+        }
         
         submitBtn.disabled = true;
         submitBtn.textContent = 'Submitting...';
@@ -79,30 +138,46 @@ document.addEventListener("DOMContentLoaded", () => {
         statusMsg.classList.remove('success', 'error');
 
         const fields = new FormData(form);
-        const formData = {
-            fullName: String(fields.get('fullName') || '').trim(),
+        const requestData = {
+            name: String(fields.get('name') || '').trim(),
+            designation: String(fields.get('designation') || '').trim(),
+            organisation: String(fields.get('organisation') || '').trim(),
             email: String(fields.get('email') || '').trim(),
-            phone: String(fields.get('phone') || '').trim(),
+            whatsapp: String(fields.get('whatsapp') || '').trim(),
             location: String(fields.get('location') || '').trim(),
-            year: String(fields.get('year') || '').trim(),
-            profession: String(fields.get('profession') || '').trim(),
-            experience: String(fields.get('experience') || '').trim(),
-            message: String(fields.get('message') || '').trim()
+            feedback: {
+                emoji: String(fields.get('emoji') || '').trim(),
+                message: String(fields.get('message') || '').trim()
+            }
         };
 
         try {
             const response = await fetch('/api/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
+                body: JSON.stringify(requestData)
             });
             const result = await response.json();
 
             if (result.success) {
-                statusMsg.textContent = 'Application submitted successfully! We will contact you soon.';
-                statusMsg.classList.add('success');
-                statusMsg.classList.remove('hidden');
+                // Show Full Screen Success UI
+                if (successOverlay) {
+                    successOverlay.classList.remove('hidden');
+                    // slight delay to allow display:block to apply before opacity transition
+                    setTimeout(() => {
+                        successOverlay.classList.add('show');
+                    }, 50);
+                } else {
+                    statusMsg.textContent = 'Feedback submitted successfully!';
+                    statusMsg.classList.add('success');
+                    statusMsg.classList.remove('hidden');
+                }
                 form.reset();
+                if (emojiContainer) {
+                    emojiContainer.querySelectorAll('.emoji-btn').forEach(btn => btn.classList.remove('selected'));
+                }
+                messageSection.classList.add('hidden');
+                submitBtn.classList.add('hidden');
             } else {
                 statusMsg.textContent = result.message || 'Something went wrong. Please try again.';
                 statusMsg.classList.add('error');
@@ -114,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
             statusMsg.classList.remove('hidden');
         } finally {
             submitBtn.disabled = false;
-            submitBtn.textContent = 'Submit Application';
+            submitBtn.textContent = 'Submit Feedback';
         }
     });
 });

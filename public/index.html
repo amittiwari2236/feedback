@@ -47,53 +47,58 @@
                         <!-- Row 1 -->
                         <div class="form-row triplet">
                             <div class="form-group floating-label-group">
-                                <input type="text" id="fullName" name="fullName" required placeholder=" " />
-                                <label for="fullName">Full Name</label>
+                                <input type="text" id="name" name="name" required placeholder=" " />
+                                <label for="name">Name</label>
                             </div>
                             <div class="form-group floating-label-group">
-                                <input type="email" id="email" name="email" required placeholder=" " />
-                                <label for="email">Email Address</label>
+                                <input type="text" id="designation" name="designation" required placeholder=" " />
+                                <label for="designation">Designation</label>
                             </div>
                             <div class="form-group floating-label-group">
-                                <input type="tel" id="phone" name="phone" required placeholder=" " />
-                                <label for="phone">Phone Number</label>
+                                <input type="text" id="organisation" name="organisation" required placeholder=" " />
+                                <label for="organisation">Organisation</label>
                             </div>
                         </div>
 
                         <!-- Row 2 -->
                         <div class="form-row triplet">
                             <div class="form-group floating-label-group">
+                                <input type="email" id="email" name="email" required placeholder=" " />
+                                <label for="email">Email</label>
+                            </div>
+                            <div class="form-group floating-label-group">
+                                <input type="tel" id="whatsapp" name="whatsapp" required pattern="[0-9]{10}" title="Please enter exactly 10 digits" placeholder=" " />
+                                <label for="whatsapp">Whatsapp Number</label>
+                            </div>
+                            <div class="form-group floating-label-group">
                                 <input type="text" id="location" name="location" required placeholder=" " />
-                                <label class="select-label" for="location">Current Location</label>
-                            </div>
-                            <div class="form-group floating-label-group">
-                                <input type="number" id="year" name="year" required placeholder=" " />
-                                <label for="year">Batch Year</label>
-                            </div>
-                            <div class="form-group floating-label-group">
-                                <input type="text" id="profession" name="profession" required placeholder=" " />
-                                <label for="profession">Profession</label>
+                                <label for="location">Current Location</label>
                             </div>
                         </div>
 
-                        <!-- Row 3 -->
-                        <div class="form-row full-width">
+                        <!-- Emoji Section -->
+                        <div class="emoji-section">
+                            <p class="emoji-title">How was your experience?</p>
+                            <div class="emoji-container" id="emojiContainer">
+                                <button type="button" class="emoji-btn" data-value="Very Happy" data-emoji="😄">😄</button>
+                                <button type="button" class="emoji-btn" data-value="Happy" data-emoji="🙂">🙂</button>
+                                <button type="button" class="emoji-btn" data-value="Average" data-emoji="😐">😐</button>
+                                <button type="button" class="emoji-btn" data-value="Sad" data-emoji="😕">😕</button>
+                                <button type="button" class="emoji-btn" data-value="Very Sad" data-emoji="😣">😣</button>
+                            </div>
+                            <input type="hidden" id="emojiValue" name="emoji" required>
+                        </div>
+
+                        <!-- Message Section -->
+                        <div id="feedbackMessageSection" class="form-row full-width hidden">
                             <div class="form-group floating-label-group">
-                                <input type="text" id="experience" name="experience" required placeholder=" " />
-                                <label for="experience">Experience</label>
+                                <textarea id="message" name="message" rows="3" placeholder=" "></textarea>
+                                <label for="message" id="messageLabel">Message</label>
                             </div>
                         </div>
 
-                        <!-- Row 4 -->
-                        <div class="form-row full-width">
-                            <div class="form-group floating-label-group">
-                                <textarea id="message" name="message" rows="3" required placeholder=" "></textarea>
-                                <label for="message">Message / Query</label>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="submit-btn" id="submitBtn">
-                            Submit Application
+                        <button type="submit" class="submit-btn hidden" id="submitBtn">
+                            Submit Feedback
                         </button>
                     </form>
                     <div id="statusMessage" class="status-msg hidden"></div>
@@ -131,6 +136,15 @@
             <button class="close-btn" id="closePopup">❌</button>
             <h2 class="popup-title">Welcome</h2>
             <p id="popupQuote" class="popup-quote"></p>
+        </div>
+    </div>
+
+    <!-- Success Modal Overlay -->
+    <div class="success-overlay hidden" id="successOverlay">
+        <div class="success-modal glass-panel">
+            <div class="success-icon">✔️</div>
+            <h2 class="success-title">Thank You</h2>
+            <p class="success-subtitle">Your feedback has been submitted successfully</p>
         </div>
     </div>
 

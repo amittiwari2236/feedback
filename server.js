@@ -395,13 +395,43 @@ app.get('*', (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-const startServer = (port = PORT) => {
-    const server = app.listen(port, () => {
-        const resolvedPort = server.address()?.port || port;
-        console.log(`Server running on http://localhost:${resolvedPort}`);
-    });
+const startServer = (requestedPort = PORT) => {
+    const tryPort = (port) => {
+        return new Promise((resolve, reject) => {
+            const server = app.listen(port, (err) => {
+                if (err) {
+                    server.close();
+                    reject(err);
+                } else {
+                    const resolvedPort = server.address()?.port || port;
+                    console.log(`Server running on http://localhost:${resolvedPort}`);
+                    resolve(server);
+                }
+            });
+            
+            server.on('error', (err) => {
+                if (err.code === 'EADDRINUSE') {
+                    server.close();
+                    reject(err);
+                }
+            });
+        });
+    };
 
-    return server;
+    const portsToTry = Array.from({length: 11}, (_, i) => 3000 + i);
+    
+    for (const port of portsToTry) {
+        try {
+            return tryPort(port);
+        } catch (err) {
+            if (err.code !== 'EADDRINUSE') {
+                throw err;
+            }
+            console.log(`Port ${port} in use, trying next...`);
+        }
+    }
+    
+    throw new Error('Could not find available port in range 3000-3010');
 };
 
 if (require.main === module) {
