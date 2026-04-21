@@ -195,17 +195,19 @@ const createTransporter = () => {
 };
 
 app.post('/api/submit', async (req, res) => {
-   const {
-  name,
-  designation,
-  organisation,
-  email,
-  whatsapp,
-  location,
-  emoji,
-  message
-} = req.body;
     console.log('Form Data Received:', req.body);
+    
+    // Safe extraction for both flat and nested feedback.emoji/message
+    const body = req.body || {};
+    const name = normalizeText(body.name);
+    const designation = normalizeText(body.designation);
+    const organisation = normalizeText(body.organisation);
+    const email = normalizeText(body.email);
+    const whatsapp = normalizeText(body.whatsapp);
+    const location = normalizeText(body.location);
+    const emoji = normalizeText(body.emoji || body.feedback?.emoji || '');
+    const message = normalizeText(body.message || body.feedback?.message || '');
+    console.log('Extracted - emoji:', JSON.stringify(emoji), 'message:', JSON.stringify(message), 'body keys:', Object.keys(body));
 
     const normalizedEmail = normalizeText(email);
     const sheetValues = [
