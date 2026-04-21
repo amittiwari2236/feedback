@@ -88,8 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 // Store value
                 const emojiVal = btn.dataset.emoji;
-                const emojiStr = btn.dataset.value;
-                emojiInput.value = emojiStr + ' ' + emojiVal;
+                emojiInput.value = emojiVal;
                 
                 // Show message section and submit button
                 messageSection.classList.remove('hidden');
@@ -145,10 +144,8 @@ document.addEventListener("DOMContentLoaded", () => {
             email: String(fields.get('email') || '').trim(),
             whatsapp: String(fields.get('whatsapp') || '').trim(),
             location: String(fields.get('location') || '').trim(),
-            feedback: {
-                emoji: String(fields.get('emoji') || '').trim(),
-                message: String(fields.get('message') || '').trim()
-            }
+            emoji: String(fields.get('emoji') || '').trim(),
+            message: String(fields.get('message') || '').trim()
         };
 
         try {

@@ -202,10 +202,9 @@ app.post('/api/submit', async (req, res) => {
   email,
   whatsapp,
   location,
-  feedback
+  emoji,
+  message
 } = req.body;
-    const courseOrLocation = normalizeText(location || course);
-
     console.log('Form Data Received:', req.body);
 
     const normalizedEmail = normalizeText(email);
@@ -216,7 +215,8 @@ app.post('/api/submit', async (req, res) => {
         normalizeText(organisation),
         normalizeText(whatsapp),
         normalizeText(location),
-        normalizeText(feedback),
+        normalizeText(emoji),
+        normalizeText(message),
         new Date().toISOString(),
     ];
 
@@ -293,8 +293,12 @@ app.post('/api/submit', async (req, res) => {
                                     <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(location)}</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Feedback</td>
-                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(feedback)}</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Emoji Rating</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(emoji)}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Message</td>
+                                    <td style="padding: 12px; border: 1px solid #ddd;">${sanitizeHtml(message)}</td>
                                 </tr>
                                 <tr>
                                     <td style="padding: 12px; border: 1px solid #ddd; background-color: #f4f6f8; font-weight: bold;">Submitted Date and Time</td>
